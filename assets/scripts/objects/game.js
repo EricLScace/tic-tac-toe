@@ -22,7 +22,7 @@ Game.prototype.addMove = function (intSquareIndex) {
   // Can this square be marked?
   if (this._arrSquareStates[intSquareIndex] !== '') {
     // No. Ignore move & post advice
-    $('.announcements').html('Sorry ' + this._strTurn +
+    $('#announcement').html('Sorry ' + this._strTurn +
       ', you cannnot change an occupied square. Click an empty square .')
     return false
   }
@@ -38,7 +38,7 @@ Game.prototype.addMove = function (intSquareIndex) {
   if (objAllPaths.isDraw) {
     // Tell server game is over
     // Post announcement
-    $('.announcements').html('Game is a draw.')
+    $('#announcement').html('Game is a draw.')
 
     // Return true
     return true
@@ -48,7 +48,7 @@ Game.prototype.addMove = function (intSquareIndex) {
     // Tell server game is over
     // Highlight winning paths
     // Post announcement
-    $('.announcements').html(this._strTurn + ' won!')
+    $('#announcement').html(this._strTurn + ' won!')
 
     // Refresh player win total
     // Return true
@@ -61,7 +61,7 @@ Game.prototype.addMove = function (intSquareIndex) {
   // Post announcement: who plays next
   // Change turn
   this._strTurn = this._strTurn === 'X' ? 'O' : 'X'
-  $('.announcements').html(this._strTurn + '\'s turn…')
+  $('#announcement').html(this._strTurn + '\'s turn…')
   // ... and does he have to be careful?
   // ... or is he doomed?
   // Return null

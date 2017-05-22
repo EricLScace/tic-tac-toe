@@ -15,7 +15,7 @@ const onGridClick = function (e) {
     $('#grid').off('click')
     // Store the game at the server.
     // Add a Play again button & listener
-    $('.announcements').append('<br><input type="button" id="play-again" value="Play again">')
+    $('#announcement').append('<br><input type="button" id="play-again" value="Play again">')
     $('#play-again').on('click', onPlayAgain)
   }
 }
@@ -23,7 +23,7 @@ const onGridClick = function (e) {
 // Start a new game
 const onNewGame = function () {
   // Clear announcements area
-  $('announcements').html('')
+  $('#announcement').html('')
 
   // Load new game grid
   $('#grid').load('assets/scripts/template/gameGrid.handlebars', function () {
@@ -32,7 +32,7 @@ const onNewGame = function () {
     // Instantiate a new game
     objGame = new Game()
     // Tell players to start
-    $('.announcements').html('X plays first.')
+    $('#announcement').html('X plays first.')
   })
 }
 
