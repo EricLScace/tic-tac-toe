@@ -24,7 +24,7 @@ const signInSuccess = function (objResponse) {
     objResponse.user.token)
 
   // Load player space on screen
-  $('#player').load('assets/html/player.html', function () {
+  $('#player').load('assets/scripts/templates/player.handlebars', function () {
     // When load completes, insert logged-in user name
     $('.player-name').html(objPlayer.name + ' logged in.')
   })

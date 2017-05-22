@@ -2,7 +2,7 @@
 
 const authEvents = require('./logic/auth-ev')
 const config = require('./config')
-const Handlebars = require('./templates/templatesCompiled')
+// const Handlebars = require('./templates/templatesCompiled')
 const setAPIOrigin = require('../../lib/set-api-origin')
 
 // Wait for document to be ready
@@ -15,8 +15,14 @@ $(() => {
   // Load player's log-in/registration forms into UI
   // Wait for the load to complete before continuing (synchronous, but
   // needed to be sure form is ready to fire event).
-  const templateScript = Handlebars.templates.signInRegister()
-  $('#player').html(templateScript, function () {
+
+  // The following doesn't work yet.
+  // const templateScript = Handlebars.templates.signInRegister()
+  // $('#player').html(templateScript, function () {
+  //   authEvents.addHandlers()
+  // })
+
+  $('#player').load('./assets/scripts/templates/signInRegister.handlebars', function () {
     authEvents.addHandlers()
   })
 })
