@@ -2,7 +2,7 @@
 
 const authEvents = require('./logic/auth-ev')
 const config = require('./config')
-// const Handlebars = require('./templates/templatesCompiled')
+const signInRegisterTemplate = require('./templates/signInRegister.handlebars')
 const setAPIOrigin = require('../../lib/set-api-origin')
 
 // Wait for document to be ready
@@ -17,14 +17,14 @@ $(() => {
   // needed to be sure form is ready to fire event).
 
   // The following doesn't work yet.
-  // const templateScript = Handlebars.templates.signInRegister()
-  // $('#player').html(templateScript, function () {
-  //   authEvents.addHandlers()
-  // })
-
-  $('#player').load('./assets/scripts/templates/signInRegister.handlebars', function () {
+  const signInRegisterHtml = signInRegisterTemplate()
+  $('#player').html(signInRegisterHtml, function () {
     authEvents.addHandlers()
   })
+
+  // $('#player').load('./assets/scripts/templates/signInRegister.handlebars', function () {
+  //   authEvents.addHandlers()
+  // })
 })
 
 // use require with a reference to bundle the file and use it in this file
