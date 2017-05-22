@@ -20,53 +20,51 @@ const Path = function (arrIndices, arrSquareStates) {
   for (let i = 0; i < 3; i++) {
     this._strState += arrSquareStates[this.arrPathIndices[i]]
   }
+
+  // intNrMarks: public count of marks on this path
   this.intNrMarks = this._strState.length
-
-  // .isTwoEqual = false if the path contains !=2 of the same marks.
-  // ='x' or 'o' if the path contains 2 of the same marks AND an empty spot.
-
   // Assume there are not two equal marks to start...
   this.isTwoEqual = false
-
-  // Are there just two marks?
-  if (this.intNrMarks === 2) {
-    // Yes. Are they identical, representing a potential win-in-one-move?
-    switch (this._strState) {
-      // Are they both 'x'
-      case 'XX': {
-        this.isTwoEqual = 'X'
-        break
-      }
-      // …or 'o'
-      case 'OO': {
-        this.isTwoEqual = 'O'
-      }
-    }
-  }
-
-  // .isFull = false if the path contains !=3 marks
-  // ='X' or 'O' if the path contains 3 of the same marks
-  // = true means a draw; e.g., xxo.
-
-  // Assume false to start...
+  // Assume there are not 3 marks to start...
   this.isFull = false
 
-  // Are there exactly 3 marks; i.e. path is full?
-  if (this.intNrMarks === 3) {
-    switch (this._strState) {
-      // Are they all 'x'
-      case 'XXX': {
-        this.isFull = 'X'
-        break
+  switch (this.intNrMarks) {
+    case 0: return
+    case 1: return
+    case 2: {
+      // .isTwoEqual = false if the path contains !=2 of the same marks.
+      // ='X' or 'O' if the path contains 2 of the same marks AND an empty spot.
+      switch (this._strState) {
+        // Are they both 'x'
+        case 'XX': {
+          this.isTwoEqual = 'X'
+          break
+        }
+        // …or 'o'
+        case 'OO': {
+          this.isTwoEqual = 'O'
+        }
       }
-      // …or 'o'
-      case 'OOO': {
-        this.isFull = 'O'
-        break
-      }
-      // …or some mixed set of marks; e.g., xxo
-      default: {
-        this.isFull = true
+      return
+    }
+    case 3: {
+      // .isFull ='X' or 'O' if the path contains 3 of the same marks
+      // = true means a draw; e.g., xxo.
+      switch (this._strState) {
+        // Are they all 'x'
+        case 'XXX': {
+          this.isFull = 'X'
+          break
+        }
+        // …or 'o'
+        case 'OOO': {
+          this.isFull = 'O'
+          break
+        }
+        // …or some mixed set of marks; e.g., xxo
+        default: {
+          this.isFull = true
+        }
       }
     }
   }

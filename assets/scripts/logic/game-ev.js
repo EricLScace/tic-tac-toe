@@ -26,7 +26,7 @@ const onNewGame = function () {
   $('#announcement').html('')
 
   // Load new game grid
-  $('#grid').load('assets/scripts/template/gameGrid.handlebars', function () {
+  $('#grid').load('assets/scripts/templates/gameGrid.handlebars', function () {
     // When grid has loaded, add delegated event handler to grid.
     $('#grid').on('click', onGridClick)
     // Instantiate a new game

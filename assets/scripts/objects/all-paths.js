@@ -21,28 +21,6 @@ const AllPaths = function (arrSquareStates) {
     new Path([2, 4, 6], arrSquareStates)
   ]
 
-  // .isDraw = true if game is a draw; else false.
-  // Check every path
-  this.isDraw = true
-  // Check each path until a potential empty path that could be won is found.
-  for (let i = 0; (i < 8 && this.isDraw); i++) {
-    // If the game is won, it isn't a draw
-    if (this._arrAllPaths[i].isWin) {
-      this.isDraw = false
-    } else {
-      // if this path has 2 marks, both the same, and a hole,
-      // it could be won
-      if (this._arrAllPaths[i].isTwoEqual) {
-        this.isDraw = false
-      } else {
-        // if just 1 or no marks, game could be won
-        if (this._arrAllPaths[i].intNrMarks <= 1) {
-          this.isDraw = false
-        }
-      }
-    }
-  }
-
   // .isWin set as follows:
   // • false: no winner (yet)
   // * object containing:
@@ -50,32 +28,58 @@ const AllPaths = function (arrSquareStates) {
   //    paths: [ [0, 1, 2], [0, 4, 8]… ] arrays of 3 indices,
   //      each indicating a winning path
   //  The .isWin object is useful in updating the UI.
+
+  // Start by assuming neither a win nor draw exist yet.
+  this.isWin = false
+  this.isDraw = false
+
   const _arrWinningPaths = []
   let _strWinningMark = ''
   // Check every path
   for (let j = 0; j < 8; j++) {
     // Search for one or more winning paths
-    // .Full returns false if a path is not full;
+    // .isFull returns false if a path is not full;
     //   otherwise returns the mark that won
     switch (this._arrAllPaths[j].isFull) {
-      case 'X': {   // x won
+      case 'X': {   // X won
         _strWinningMark = 'X'
         _arrWinningPaths.push(this._arrAllPaths[j].arrPathIndices)
         break
       }
-      case 'O': {   // y won
+      case 'O': {   // O won
         _strWinningMark = 'O'
         _arrWinningPaths.push(this._arrAllPaths[j].arrPathIndices)
         break
       }
     }
   }
-  if (_strWinningMark === '') {
-    this.isWin = false
-  } else {
+
+  // Were one or more winning paths identified?
+  if (_strWinningMark !== '') {
+    // Yes: prepare the return object and return
     this.isWin = {
       mark: _strWinningMark,
       paths: _arrWinningPaths
+    }
+    return
+  }
+
+  // .isDraw = true if game is a draw; else false.
+  // Works by proving a draw does NOT exist.
+  this.isDraw = true
+
+  // Check each path until a potential empty path that could be won is found.
+  for (let i = 0; i < 8; i++) {
+    // if this path has 2 marks, both the same, and a hole, it could be won
+    if (this._arrAllPaths[i].isTwoEqual) {
+      this.isDraw = false
+      return
+    }
+
+    // if just 1 or no marks, game could be won
+    if (this._arrAllPaths[i].intNrMarks <= 1) {
+      this.isDraw = false
+      return
     }
   }
 }
