@@ -36,7 +36,7 @@ const signInSuccess = function (objResponse) {
 const signInFailure = function (objResponse) {
   // API returns a 401 (Unauthorized) failure with object containing:
   // statusText: "Unauthorized"
-  $('#player').html('Log-in failed.')
+  $('#announcement').html('<br>Name or password not recognized. Try again, or re-register.')
 }
 
 // const signOutSuccess = function (objResponse) {
@@ -63,7 +63,7 @@ const signUpSuccess = function (objResponse) {
   // Re-init the registration form fields
 
   // Display welcome announcement.
-  $('.announcements').html('Welcome, ' +
+  $('#announcement').html('Welcome, ' +
     objResponse.user.email +
     '. Please log in or register another user.')
 }

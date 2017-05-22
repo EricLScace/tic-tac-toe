@@ -126,7 +126,9 @@ __3.3 Wireframes and UX flow__
         $('#player').html(templateScript, function () {
           authEvents.addHandlers()
         })
-    This did not quite work (yet).
+    This did not quite work (yet). Reverted slightly to allow local server testing to continue.
+
+>__3.13 Miscellaneous bug fixes__ See issue log.
 
 __4. Unsolved problems for future releases__
   This list is maintained in the GitHub Issues section.
