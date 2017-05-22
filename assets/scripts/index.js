@@ -14,7 +14,8 @@ $(() => {
   // Load player's log-in/registration forms into UI
   // Wait for the load to complete before continuing (synchronous, but
   // needed to be sure form is ready to fire event).
-  $('#player').load('./sign-in-register.html', function () {
+  const templateScript = Handlebars.templates.signInRegister()
+  $('#player').html(templateScript, function () {
     authEvents.addHandlers()
   })
 })

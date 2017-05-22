@@ -136,6 +136,35 @@ These ranged from the very detailed (fix a detailed item in code) to the high-le
     after registration).
   • Bug fixes needed.
 
+  3.12 Deploy broken
+  In packaging, the HTML templates used to contain e.g., the sign-in/register
+  forms appear to be moved to locations not in agreement with the js
+  require() functions. As a result, the site generates a 404 error each time
+  it tries to load, as it cannot find the HTML templates.
+  <ul>
+    <li>Attempted to relocate the templates inside the js script folder; this did
+    not work.</li>
+    <li>Danny suggested looking at Handlebars.
+    https://www.sitepoint.com/a-beginners-guide-to-handlebars/
+    I tried the following:</li>
+    <ul>
+      <li>Install Handlebars globally with 'npm install handlebars -g'.</li>
+      <li>Placed the HTML templates in assets/scripts/templates.</li>
+      <li>Renamed the HTML templates with .handlebars extension.</li>
+      <li>Pre-compile the templates in the terminal with the command<br>
+        handlebars path/to/templates -f templatesCompiled.js<br>
+        This could be run in the templates folder to leave templatesCompiled.js
+        in that folder; e.g., handlebars . -f templatesCompiled.js</li>
+      <li>Include these scripts in index.html:<br>
+        <script src="handlebars.runtime.js"></script><br>
+        <script src="path/to/templatesCompiled.js"></script></li>
+      <li>Inject the templates as follows:<br>
+      const templateScript = Handlebars.templates.signInRegister()
+      $('#player').html(templateScript, function () {
+        authEvents.addHandlers()
+      })<li>
+
+
 
 
 
