@@ -1,6 +1,7 @@
 'use strict'
 
 const Game = require('../objects/game')
+const gameGridTemplate = require('../templates/gameGrid.handlebars')
 let objGame = {}
 
 // Click on the grid
@@ -26,14 +27,14 @@ const onNewGame = function () {
   $('#announcement').html('')
 
   // Load new game grid
-  $('#grid').load('assets/scripts/templates/gameGrid.handlebars', function () {
-    // When grid has loaded, add delegated event handler to grid.
-    $('#grid').on('click', onGridClick)
-    // Instantiate a new game
-    objGame = new Game()
-    // Tell players to start
-    $('#announcement').html('X plays first.')
-  })
+  const gameGridHtml = gameGridTemplate()
+  $('#grid').html(gameGridHtml)
+  // When grid has loaded, add delegated event handler to grid.
+  $('#grid').on('click', onGridClick)
+  // Instantiate a new game
+  objGame = new Game()
+  // Tell players to start
+  $('#announcement').html('X plays first.')
 }
 
 const onPlayAgain = function (e) {

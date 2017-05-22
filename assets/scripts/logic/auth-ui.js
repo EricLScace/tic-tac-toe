@@ -2,6 +2,7 @@
 
 const objGameEvents = require('./game-ev')
 const objPlayer = require('../objects/player')
+const playerTemplate = require('../templates/player.handlebars')
 
 const signInSuccess = function (objResponse) {
   // API returns an object of form
@@ -13,10 +14,6 @@ const signInSuccess = function (objResponse) {
   //   }
   // }
 
-  // Remove event handlers?
-  // $('#sign-in').off('submit')
-  // $('#sign-up').off('submit')
-
   // Save player credentials
   objPlayer.fnIsLoggedIn(true,
     objResponse.user.email,
@@ -24,10 +21,10 @@ const signInSuccess = function (objResponse) {
     objResponse.user.token)
 
   // Load player space on screen
-  $('#player').load('assets/scripts/templates/player.handlebars', function () {
-    // When load completes, insert logged-in user name
-    $('.player-name').html(objPlayer.name + ' logged in.')
-  })
+  const playerHtml = playerTemplate()
+  $('#player').html(playerHtml)
+  // When load completes, insert logged-in user name
+  $('.player-name').html(objPlayer.name + ' logged in.')
 
   // Load & start new game
   objGameEvents.onNewGame()
