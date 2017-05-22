@@ -2,6 +2,7 @@
 
 const authEvents = require('./logic/auth-ev')
 const config = require('./config')
+const Handlebars = require('./templates/templatesCompiled')
 const setAPIOrigin = require('../../lib/set-api-origin')
 
 // Wait for document to be ready
