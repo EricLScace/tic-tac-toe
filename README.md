@@ -132,12 +132,62 @@ __3.3 Wireframes and UX flow__
         })
     This did not quite work (yet). Reverted slightly to allow local server testing to continue.
 
->__3.14 Vanishing event handler introduces structured code modules__ A bug caused by a missing event handler revealed a circular reference between two js files, each of which required the other. The event handler worked fine when described in the same file as the code that employed it, but failed when placed in a different file & required. This led to better structure between files:
->* authN files: deals only with user authentication activities: log-in, log-out, password-change and registration.
->* game files: deals only with game activities.
->Each ___continue from here___
->>* authNApiTx: exposes methods that result in calls to the server's API functions that deal with authentication.
->>* authNApiRx: API authentication event handlers.
+>__3.14 Vanishing event handler introduces structured code modules__ A bug caused by a missing event handler revealed a circular reference between two js files, each of which required the other. The event handler worked fine when described in the same file as the code that employed it, but failed when placed in a different file & required.
+
+>This led to better structure between files:
+>* player authentication files: deals only with user's authentication actions: log-in, log-out, password-change and registration.
+>* game files: deals only with game actions.
+
+>Each group of files contains its own hierarchy with partitioned responsibilities:
+
+> __playerAuthn__: overall supervision of the player's authentication actions & state.
+* __authnAPItx__: exposes methods to playerAuthn for transmiting requests for authentication actions to the remote API server:
+>>- register
+>>- logIn
+>>- logOut
+>>- changePassword
+* __authnAPIrx__: event listeners for the remote API server's responses about authentication:
+>>- rxSignUp
+>>- rxSignIn
+>>- rxSignOut
+>>- rxChangePassword
+* __authnUItx__: exposes methods to playerAuthn for transmitting semantic instructions for changes to the DOM/UI:
+>>- loadPlayer
+>>- unloadPlayer
+* __authnUIrx__: event listeners for authentication action requests from the user:
+>>- onRegisterSubmit
+>>- onLogInSubmit
+>>- onLogOutClick
+>>- onChangePasswordSubmit
+>
+> __playerAuthn__ in turn exposes these methods to the subtendding …rx modules:
+>* for authnAPIrx: loggedIn, loggedOut, registered, passwordChanged, logInFail, logOutFail, registerFail, passwordChangeFail.
+>* for authnUIrx: registerReq, logInReq, logOutReq, changePasswordReq.
+
+> __gameController__ provides overall supervision of the game.
+* __gameAPItx__: exposes methods to gameController for transmitting requests about games to the remote API server:
+>>- addGame
+>>- findGames
+* __gameAPIrx__: event listeners for the remote API server's response about games:
+>>- rxAddGame
+>>- rxFindGames
+* __gameUItx__: exposes methods to gameController for transmitting semantic instructions for changes to the DOM/UI about the game; e.g.,
+>>- loadNewGame
+>>- updateGame
+>>- announce
+>>- postPlayerStats
+* __gameUIrx__: event listeners for game actions taken by the user:
+>>- onGridClick
+>>- onResignClick
+>>- onSuspendClick
+>>- onPlayAgainClick
+
+> __gameController__ in turn exposes these methods to subtending …rx modules and to playerAuthn:
+> for gameAPIrx: addedGame, foundGames, addGameFail, findGameFail
+> for gameUIrx: addMove, resignGame, suspendGame, playAgain
+> for playerAuthn: playerLoggedIn, playerLoggedOut
+
+> In the interests of meeting submission deadlines, migration to this module structure will be done incrementally on an as-needed basis while implementing remaining required features.
 
 >__3.15 Miscellaneous bug fixes__ See issue logs.
 
