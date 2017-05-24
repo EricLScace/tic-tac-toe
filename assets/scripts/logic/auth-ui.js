@@ -1,5 +1,6 @@
 'use strict'
 
+const api = require('./auth-api')
 const objGameEvents = require('./game-ev')
 const objPlayer = require('../objects/player')
 const playerTemplate = require('../templates/player.handlebars')
@@ -24,10 +25,27 @@ const signInSuccess = function (objResponse) {
   const playerHtml = playerTemplate()
   $('#player').html(playerHtml)
   // When load completes, insert logged-in user name
-  $('.player-name').html(objPlayer.name + ' logged in.')
+  $('#player-name').html(objPlayer.name + ' logged in.')
+  // Add log-out button & event handler
+  $('#player-actions').html('<input type="button" id="log-out-button" value="Log out">')
+  console.log(onLogOut)
+  $('#log-out-button').on('click', onLogOut)
 
   // Load & start new game
   objGameEvents.onNewGame()
+}
+
+const onLogOut = function (e) {
+  // e.preventDefault()
+  // $('#announcement').html('Logging out…')
+  // // Store the game at the server, if one was in progess.
+  // // Clear game grid
+  // // Remove grid's event handler
+  // $('#grid').off('click')
+  console.log('auth-ui onLogOut', api.objUserAuthNToken)
+//   api.signOut()
+//     .then(ui.signOutSuccess)
+//     .catch(ui.signOutFailure)
 }
 
 const signInFailure = function (objResponse) {

@@ -31,14 +31,6 @@ const onSignIn = function (e) {
 }
 
 //
-// const onSignOut = function (event) {
-//   event.preventDefault()
-//   console.log('Event onSignOut for objUserAuthNToken:', api.objUserAuthNToken)
-//   api.signOut()
-//     .then(ui.signOutSuccess)
-//     .catch(ui.signOutFailure)
-// }
-//
 // const onChangePassword = function (event) {
 //   event.preventDefault()
 //   const objPasswordsOldNew = getFormFields(event.target)
@@ -54,8 +46,8 @@ const addHandlers = () => {
   // forms fire 'submit' events. Do not listen for click on the input button, as
   // we will not received data from the form.
   // $('#change-password').on('submit', onChangePassword)
+  // $('#log-out').on('click', onLogOut)
   $('#sign-in').on('submit', onSignIn)
-  // $('#sign-out').on('submit', onSignOut)
   $('#sign-up').on('submit', onSignUp)
 }
 

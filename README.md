@@ -18,8 +18,12 @@ __2. Technologies uses__
 
 >__2.2 Javascript__
 
->__2.3 SCSS & SASS__ The following files govern the site's appearance.
-* colors: semantic color definitions
+>__2.3 SCSS & SASS__ To clarify operation on DOM elements, I divided rôles as follows:
+* UI events: connected to a DOM element ID whenever possible. If an event handler listened to a collection of DOM elements, prefer to use a delegated event handler. If a class name was needed for a collection of elements that did not fit in the DOM hierarchy, choose a class name with a verb that relates to the UI event; e.g., class="log-out-buttons".
+* UI appearance: propagated into the DOM strictly through class names. Appearance follows a hierarchy:
+>* semantic composition: the application of a group of semantic typography + semantic spaces to classes of visual elements, depending on the elements' rôle. Composition is built up from:
+>>* semantic typography: ___continue revision here____
+* the allowed combination of font + face (italic, roman, small cap) + weight (normal, bold) + color: semantic color definitions. Each combination conveys a specific functional meaning throughout the site.
   * themes: there are no user-selectable themes in v1.
   * typography: semantic definitions of allowed fonts/faces. In compliance with UI/UX and good typographical style, the following rules exist:
     * no view contains more than 4 typefaces (font + size + style)
@@ -108,7 +112,7 @@ __3.3 Wireframes and UX flow__
 >* Refactored Player to allow a objPlayer to be neither logged in or out, in order to cache a proffered name/password for later reuse (e.g., to log-in after registration).
 >* Bug fixes needed.
 
->__3.12 Deploy broken__ In packaging, the HTML templates used to contain e.g., the sign-in/register forms appear to be moved to locations not in agreement with the js require() functions. As a result, the site generates a 404 error each time it tries to load, as it cannot find the HTML templates.
+>__3.12 Deploy broken — introduce templates__ In packaging, the HTML templates used to contain e.g., the sign-in/register forms appear to be moved to locations not in agreement with the js require() functions. As a result, the site generates a 404 error each time it tries to load, as it cannot find the HTML templates.
 >* Attempted to relocate the templates inside the js script folder; this did not work.
 >* Danny suggested looking at Handlebars. https://www.sitepoint.com/a-beginners-guide-to-handlebars/. I tried the following:
 >>* Install Handlebars globally with 'npm install handlebars -g'
@@ -128,7 +132,14 @@ __3.3 Wireframes and UX flow__
         })
     This did not quite work (yet). Reverted slightly to allow local server testing to continue.
 
->__3.13 Miscellaneous bug fixes__ See issue log.
+>__3.14 Vanishing event handler introduces structured code modules__ A bug caused by a missing event handler revealed a circular reference between two js files, each of which required the other. The event handler worked fine when described in the same file as the code that employed it, but failed when placed in a different file & required. This led to better structure between files:
+>* authN files: deals only with user authentication activities: log-in, log-out, password-change and registration.
+>* game files: deals only with game activities.
+>Each ___continue from here___
+>>* authNApiTx: exposes methods that result in calls to the server's API functions that deal with authentication.
+>>* authNApiRx: API authentication event handlers.
+
+>__3.15 Miscellaneous bug fixes__ See issue logs.
 
 __4. Unsolved problems for future releases__
   This list is maintained in the GitHub Issues section.
