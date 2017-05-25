@@ -3,7 +3,7 @@
 // Contains all calls to the authentication API
 
 const config = require('../config')
-const objPlayer = require('../objects/player')
+const Player = require('../objects/player')
 
 // Invokes sign-up API
 const signUp = function (objSignUp) {
@@ -17,8 +17,10 @@ const signUp = function (objSignUp) {
   // }
 
   // Cache credentials for log-in after successful registration
-  objPlayer.fnIsLoggedIn(
-    null, objSignUp.credentials.email, objSignUp.credentials.password)
+  const objPlayer = new Player(
+    null,
+    objSignUp.credentials.email,
+    objSignUp.credentials.password)
 
   // Attempt to register
   return $.ajax({
@@ -38,8 +40,8 @@ const signIn = function (objSignIn) {
   // }
 
   // Cache credentials for re-authentication on password change
-  objPlayer.fnIsLoggedIn(
-    null, objSignIn.credentials.email, objSignIn.credentials.password)
+  // objPlayer.fnIsLoggedIn(
+  //   null, objSignIn.credentials.email, objSignIn.credentials.password)
 
   return $.ajax({
     url: config.apiOrigin + '/sign-in',
@@ -74,8 +76,7 @@ const signOut = function () {
 module.exports = {
   // changePassword,
   signIn,
-  signOut,
-  signUp
+    signUp
 }
 
 // Can be used to debug random error handling

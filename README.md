@@ -140,7 +140,7 @@ __3.3 Wireframes and UX flow__
 
 >Each group of files contains its own hierarchy with partitioned responsibilities:
 
-> __playerAuthn__: overall supervision of the player's authentication actions & state.
+> __playerAuthnTx__ and __playerAuthnRx__: overall supervision of the player's authentication actions & state.
 * __authnAPItx__: exposes methods to playerAuthn for transmiting requests for authentication actions to the remote API server:
 >>- register
 >>- logIn
@@ -153,6 +153,7 @@ __3.3 Wireframes and UX flow__
 >>- rxChangePassword
 * __authnUItx__: exposes methods to playerAuthn for transmitting semantic instructions for changes to the DOM/UI:
 >>- loadPlayer
+>>- loggingOUtPlayer
 >>- unloadPlayer
 * __authnUIrx__: event listeners for authentication action requests from the user:
 >>- onRegisterSubmit
@@ -160,10 +161,14 @@ __3.3 Wireframes and UX flow__
 >>- onLogOutClick
 >>- onChangePasswordSubmit
 >
-> __playerAuthn__ in turn exposes these methods to the subtendding …rx modules:
+> __playerAuthnRx__ in turn exposes these methods to the subtendding …rx modules:
 >* for authnAPIrx: loggedIn, loggedOut, registered, passwordChanged, logInFail, logOutFail, registerFail, passwordChangeFail.
->* for authnUIrx: registerReq, logInReq, logOutReq, changePasswordReq.
+>* for authnUIrx: registerRequested, logInRequested, logOutRequested, changePasswordRequested.
 
+> __playerAuthnTx__ exposes these methods:
+>* for playerAuthnRx: logOutRequested
+>* for gameController: readyToLogOut
+>
 > __gameController__ provides overall supervision of the game.
 * __gameAPItx__: exposes methods to gameController for transmitting requests about games to the remote API server:
 >>- addGame
@@ -185,7 +190,7 @@ __3.3 Wireframes and UX flow__
 > __gameController__ in turn exposes these methods to subtending …rx modules and to playerAuthn:
 > for gameAPIrx: addedGame, foundGames, addGameFail, findGameFail
 > for gameUIrx: addMove, resignGame, suspendGame, playAgain
-> for playerAuthn: playerLoggedIn, playerLoggedOut
+> for playerAuthnRx: playerLoggedIn, playerLogOutRequested, playerLoggedOut
 
 > In the interests of meeting submission deadlines, migration to this module structure will be done incrementally on an as-needed basis while implementing remaining required features.
 

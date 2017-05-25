@@ -2,7 +2,7 @@
 
 const authnUIrx = require('./authN/authnUIrx')
 const objGameEvents = require('./game-ev')
-const objPlayer = require('../objects/player')
+const Player = require('../objects/player')
 const playerTemplate = require('../templates/player.handlebars')
 
 const signInSuccess = function (objResponse) {
@@ -16,7 +16,7 @@ const signInSuccess = function (objResponse) {
   // }
 
   // Save player credentials
-  objPlayer.fnIsLoggedIn(true,
+  const objPlayer = new Player(true,
     objResponse.user.email,
     objResponse.user.id,
     objResponse.user.token)
@@ -28,7 +28,7 @@ const signInSuccess = function (objResponse) {
   $('#player-name').html(objPlayer.name + ' logged in.')
   // Add log-out button & event handler
   $('#player-actions').html('<input type="button" id="log-out-button" value="Log out">')
-  $('#log-out-button').on('click', authnUIrx.onLogOut)
+  $('#log-out-button').on('click', authnUIrx.onLogOutClick)
 
   // Load & start new game
   objGameEvents.onNewGame()

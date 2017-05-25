@@ -62,7 +62,4 @@ Player.prototype.fnIsLoggedIn = function (bool, strName, strId, strAuthNToken) {
   return this._setLogInStatus(bool, strName, strId, strAuthNToken)
 }
 
-// Create a global to track the single user instance.
-const objPlayer = new Player()
-
-module.exports = objPlayer
+module.exports = Player
