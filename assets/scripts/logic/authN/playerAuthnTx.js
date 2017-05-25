@@ -2,20 +2,8 @@
 const authnAPItx = require('./authnAPItx')
 const authnUItx = require('./authnUItx')
 
-const authEvents = require('../auth-ev')
-const signInRegisterTemplate = require('../../templates/signInRegister.handlebars')
-
 const readyToLogInRegister = function () {
-  // Insert Tic-tac-toe heading
-  $('.game-title').html('<h1>Tic Tac Toe</h1>')
-
-  // Load player's log-in/registration forms into UI
-  // Wait for the load to complete before continuing (synchronous, but
-  // needed to be sure form is ready to fire event).
-  const signInRegisterHtml = signInRegisterTemplate()
-  $('#player').html(signInRegisterHtml)
-  $('#sign-in').on('submit', authEvents.onSignIn)
-  $('#sign-up').on('submit', authEvents.onSignUp)
+  authnUItx.solicitingLogInRegister()
 }
 
 const readyToLogOut = function () {

@@ -153,8 +153,8 @@ __3.3 Wireframes and UX flow__
 >>- rxChangePassword
 * __authnUItx__: exposes methods to playerAuthn for transmitting semantic instructions for changes to the DOM/UI:
 >>- loadPlayer
->>- loggingOUtPlayer
->>- unloadPlayer
+>>- loggingOutPlayer
+>>- solicitingLogInRegister
 * __authnUIrx__: event listeners for authentication action requests from the user:
 >>- onRegisterSubmit
 >>- onLogInSubmit
@@ -166,7 +166,6 @@ __3.3 Wireframes and UX flow__
 >* for authnUIrx: registerRequested, logInRequested, logOutRequested, changePasswordRequested.
 
 > __playerAuthnTx__ exposes these methods:
->* for playerAuthnRx: logOutRequested
 >* for gameController: readyToLogOut
 >* for index.js: readyToLogInRegister
 >
