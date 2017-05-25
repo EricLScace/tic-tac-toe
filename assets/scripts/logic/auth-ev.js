@@ -41,16 +41,18 @@ const onSignIn = function (e) {
 //     .catch(ui.changePasswordFailure)
 // }
 
-const addHandlers = () => {
-  // on gives the callback an event (provided by the browser) as first argument
-  // forms fire 'submit' events. Do not listen for click on the input button, as
-  // we will not received data from the form.
-  // $('#change-password').on('submit', onChangePassword)
-  // $('#log-out').on('click', onLogOut)
-  $('#sign-in').on('submit', onSignIn)
-  $('#sign-up').on('submit', onSignUp)
-}
+// const addHandlers = () => {
+//   // on gives the callback an event (provided by the browser) as first argument
+//   // forms fire 'submit' events. Do not listen for click on the input button, as
+//   // we will not received data from the form.
+//   // $('#change-password').on('submit', onChangePassword)
+//   // $('#log-out').on('click', onLogOut)
+//   $('#sign-in').on('submit', onSignIn)
+//   $('#sign-up').on('submit', onSignUp)
+// }
 
 module.exports = {
-  addHandlers
+//  addHandlers
+  onSignIn,
+  onSignUp
 }

@@ -168,6 +168,7 @@ __3.3 Wireframes and UX flow__
 > __playerAuthnTx__ exposes these methods:
 >* for playerAuthnRx: logOutRequested
 >* for gameController: readyToLogOut
+>* for index.js: readyToLogInRegister
 >
 > __gameController__ provides overall supervision of the game.
 * __gameAPItx__: exposes methods to gameController for transmitting requests about games to the remote API server:
