@@ -27,8 +27,8 @@ Player.prototype.setLogInStatus = function (bool, strName, strId, strAuthNToken,
       case true:
         // Accept proffered credentials as logged in.
         this._isLoggedIn = true
-        this._id = strId
-        this._authNToken = strAuthNToken
+        this.id = strId
+        this.authNToken = strAuthNToken
         break
 
       case null:
@@ -42,12 +42,22 @@ Player.prototype.setLogInStatus = function (bool, strName, strId, strAuthNToken,
         // Log out a player by changing _isLoggedIn and erasing credentials.
         this._isLoggedIn = false
         this.name = ''
-        this._id = ''
-        this._authNToken = ''
+        this.id = ''
+        this.authNToken = ''
         this._password = ''
     }
   }
   return this._isLoggedIn
 }
+
+// Player.prototype.getCredentials = function () {
+//   return {
+//       credentials: {
+//         email: this.name,
+//         id: this.id,
+//         password_confirmation: "string"
+//       }
+//   }
+// }
 
 module.exports = Player

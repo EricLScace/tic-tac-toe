@@ -1,6 +1,7 @@
 'use strict'
 // Contains all calls to the authentication API
 const config = require('../config')
+const store = require('../store')
 
 // Invokes sign-up API
 const signUp = function (objProfferedCredentials) {
@@ -12,8 +13,6 @@ const signUp = function (objProfferedCredentials) {
   //     password_confirmation: "string"
   //   }
   // }
-
-  // Attempt to register
   return $.ajax({
     url: config.apiOrigin + '/sign-up',
     method: 'POST',
@@ -21,7 +20,7 @@ const signUp = function (objProfferedCredentials) {
   })
 }
 
-const signIn = function (objSignIn) {
+const signIn = function (objProfferedCredentials) {
   // per API documentation, objSignIn must be of form:
   // {
   //   credentials: {
@@ -29,22 +28,21 @@ const signIn = function (objSignIn) {
   //     password: "string"
   //   }
   // }
-
   return $.ajax({
     url: config.apiOrigin + '/sign-in',
     method: 'POST',
-    data: objSignIn
+    data: objProfferedCredentials
   })
 }
 
 const signOut = function () {
-//   return $.ajax({
-//     url: 'http://localhost:4741/sign-out/' + objUserAuthNToken.strId,
-//     method: 'DELETE',
-//     headers: {
-//       'Authorization': 'Token token=' + objUserAuthNToken.strAuthNToken
-//     }
-//   })
+  return $.ajax({
+    url: config.apiOrigin + '/sign-out/' + store.objPlayer.id,
+    method: 'DELETE',
+    headers: {
+      'Authorization': 'Token token=' + store.objPlayer.authNToken
+    }
+  })
 }
 
 // const changePassword = function (objPasswordsOldNew) {
