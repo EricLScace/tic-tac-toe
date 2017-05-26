@@ -45,21 +45,37 @@ const signOut = function () {
   })
 }
 
-// const changePassword = function (objPasswordsOldNew) {
-//   console.log('api.changePassword invoked with data', objPasswordsOldNew)
-//   console.log('and on objUserAuthNToken', objUserAuthNToken)
-//   return $.ajax({
-//     url: 'http://localhost:4741/change-password/' + objUserAuthNToken.strId,
-//     method: 'PATCH',
-//     headers: {
-//       'Authorization': 'Token token=' + objUserAuthNToken.strAuthNToken
-//     },
-//     data: objPasswordsOldNew
-//   })
-// }
+const changePassword = function (objProfferedCredentials) {
+  // const blob = {
+  //   url: config.apiOrigin + '/change-password/' + store.objPlayer.id,
+  //   method: 'PATCH',
+  //   headers: {
+  //     'Authorization': 'Token token=' + store.objPlayer.authNToken
+  //   },
+  //   data: {
+  //     'passwords': {
+  //       'old': objProfferedCredentials.credentials.old,
+  //       'new': objProfferedCredentials.credentials.new
+  //     }
+  //   }
+  // }
+  return $.ajax({
+    url: config.apiOrigin + '/change-password/' + store.objPlayer.id,
+    method: 'PATCH',
+    headers: {
+      'Authorization': 'Token token=' + store.objPlayer.authNToken
+    },
+    data: {
+      'passwords': {
+        'old': objProfferedCredentials.credentials.old,
+        'new': objProfferedCredentials.credentials.new
+      }
+    }
+  })
+}
 
 module.exports = {
-  // changePassword,
+  changePassword,
   signIn,
   signOut,
   signUp

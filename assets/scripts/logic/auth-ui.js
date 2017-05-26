@@ -9,15 +9,6 @@ const playerTemplate = require('../templates/player.handlebars')
 const signInRegisterTemplate = require('../templates/signInRegister.handlebars')
 const store = require('../store')
 
-//
-// const changePasswordSuccess = function (objResponse) {
-//   // API returns undefined.
-// }
-//
-// const changePasswordFailure = function (objResponse) {
-//   // Mostly likely failure scenario is wrong old password.
-// }
-
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // Change password functions
 const onChangePassword = function (e) {
@@ -46,18 +37,36 @@ const onCancel = function (e) {
 }
 
 const onChange = function (e) {
-  // equal passwords?
+  // ALWAYS preventDefault first!
+  e.preventDefault()
+
+  // Future: check that passwords were equal
+  api.changePassword(getFormFields(e.target))
+    .then(changePasswordSuccess)
+    .catch(changePasswordFailure)
 }
-//
-// const onChangePassword = function (event) {
-//   event.preventDefault()
-//   const objPasswordsOldNew = getFormFields(event.target)
-//   console.log('Event onChangePassword invoked with data', objPasswordsOldNew)
-//   console.log('and on objUserAuthNToken', api.objUserAuthNToken)
-//   api.changePassword(objPasswordsOldNew)
-//     .then(ui.changePasswordSuccess)
-//     .catch(ui.changePasswordFailure)
-// }
+
+const changePasswordSuccess = function () {
+  // Remove click handlers & report success
+  changePasswordResults(true)
+}
+
+const changePasswordFailure = function () {
+  // Remove click handlers & report failure
+  changePasswordResults(false)
+}
+
+const changePasswordResults = function (isChanged) {
+  // Remove click handlers
+  $('#change-password').off('submit', onChange)
+  $('#cancel-button').off('click', onCancel)
+
+  // Report success or failure & re-display logged in user, etc
+  const message = isChanged
+    ? store.objPlayer.name + '\'s password was changed.'
+    : 'Could not change' + store.objPlayer.name + '\'s password right now. Try again later.'
+  displayLoggedInPlayer(message)
+}
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // Log-in functions
@@ -67,17 +76,21 @@ const addLogInRegister = function () {
   $('#sign-up').on('submit', onSignUp)
 }
 
-const displayLoggedInPlayer = function () {
+const displayLoggedInPlayer = function (message) {
   // Load player space on screen
   $('#player').html(playerTemplate())
+
   // When load completes, insert logged-in user name
-  $('#player-name').html(store.objPlayer.name + ' logged in.')
+  // preceeded by any supplemental messages; e.g., about password change results
+  message = message ? message + '<br>' : ''
+  $('#player-name').html(message + store.objPlayer.name + ' logged in.')
+
   // Add log-out & change-password buttons & event handlers
-  $('#player-actions').html('<input type="button" id="log-out-button" value="Log out">')
-  $('#log-out-button').on('click', onLogOut)
   // Add change-password button
-  $('#player-actions').append('<input type="button" id="change-password-button" value="Change password">')
+  $('#player-actions').html('<input type="button" id="change-password-button" value="Change password">')
   $('#change-password-button').on('click', onChangePassword)
+  $('#player-actions').append('<input type="button" id="log-out-button" value="Log out">')
+  $('#log-out-button').on('click', onLogOut)
 }
 
 const onLogIn = function (e) {
