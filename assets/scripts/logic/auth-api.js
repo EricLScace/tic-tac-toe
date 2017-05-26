@@ -1,7 +1,7 @@
 'use strict'
 // Contains all calls to the authentication API
 const config = require('../config')
-const store = require('../store')
+// const store = require('../store')
 
 // Invokes sign-up API
 const signUp = function (objProfferedCredentials) {
@@ -35,15 +35,15 @@ const signIn = function (objProfferedCredentials) {
   })
 }
 
-const signOut = function () {
-  return $.ajax({
-    url: config.apiOrigin + '/sign-out/' + store.objPlayer.id,
-    method: 'DELETE',
-    headers: {
-      'Authorization': 'Token token=' + store.objPlayer.authNToken
-    }
-  })
-}
+// const signOut = function () {
+//   return $.ajax({
+//     url: config.apiOrigin + '/sign-out/' + store.objPlayer.id,
+//     method: 'DELETE',
+//     headers: {
+//       'Authorization': 'Token token=' + store.objPlayer.authNToken
+//     }
+//   })
+// }
 
 // const changePassword = function (objPasswordsOldNew) {
 //   console.log('api.changePassword invoked with data', objPasswordsOldNew)
@@ -61,7 +61,7 @@ const signOut = function () {
 module.exports = {
   // changePassword,
   signIn,
-  signOut,
+  // signOut,
   signUp
 }
 

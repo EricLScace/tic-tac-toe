@@ -1,5 +1,5 @@
 'use strict'
-const authUI = require('./logic/auth-ui')
+const authLogIn = require('./logic/authLogIn')
 const config = require('./config')
 const setAPIOrigin = require('../../lib/set-api-origin')
 
@@ -11,7 +11,7 @@ $(() => {
   $('.game-title').html('<h1>Tic Tac Toe</h1>')
 
   // Load player's log-in/registration forms into UI
-  authUI.addLogInRegister()
+  authLogIn.addLogInRegister()
 })
 
 // use require with a reference to bundle the file and use it in this file

@@ -1,11 +1,12 @@
 'use strict'
 // Invoked by API responses & UI actions
 const api = require('./auth-api')
+const authLogOut = require('./authLogOut')
 const getFormFields = require('../../../lib/get-form-fields')
 const objGameEvents = require('./game-ev')
 const Player = require('../objects/player')
 const playerTemplate = require('../templates/player.handlebars')
-const signInRegisterTemplate = require('../templates/signInRegister.handlebars')
+// const signInRegisterTemplate = require('../templates/signInRegister.handlebars')
 const store = require('../store')
 
 //
@@ -20,11 +21,11 @@ const store = require('../store')
 // }
 
 // Log-in functions
-const addLogInRegister = function () {
-  $('#player').html(signInRegisterTemplate())
-  $('#sign-in').on('submit', onLogIn)
-  $('#sign-up').on('submit', onSignUp)
-}
+// const addLogInRegister = function () {
+//   $('#player').html(signInRegisterTemplate())
+//   $('#sign-in').on('submit', onLogIn)
+//   $('#sign-up').on('submit', onSignUp)
+// }
 
 const onLogIn = function (e) {
   e.preventDefault()
@@ -67,7 +68,7 @@ const logInSuccess = function (objResponse) {
   $('#player-name').html(store.objPlayer.name + ' logged in.')
   // Add log-out button & event handler
   $('#player-actions').html('<input type="button" id="log-out-button" value="Log out">')
-  $('#log-out-button').on('click', onLogOut)
+  $('#log-out-button').on('click', authLogOut.onLogOut)
 
   // Load & start new game
   objGameEvents.onNewGame()
@@ -80,26 +81,26 @@ const logInFailure = function (objResponse) {
 }
 
 // Log out functions
-const onLogOut = function (e) {
-  e.preventDefault()
-  // // Store the game at the server, if one was in progess.
-  // // Clear game grid & remove its click handler
-  $('#grid').html('')
-  $('#grid').off('click')
-  $('#announcement').html('Logging out…')
-  api.signOut()
-    .then(logOutSuccess)
-    .catch(logOutFailure)
-}
-
-const logOutSuccess = function (objResponse) {
-  $('#announcement').html('')
-  addLogInRegister()
-}
-
-const logOutFailure = function (objResponse) {
-  // Usually this is a token value problem.
-}
+// const onLogOut = function (e) {
+//   e.preventDefault()
+//   // // Store the game at the server, if one was in progess.
+//   // // Clear game grid & remove its click handler
+//   $('#grid').html('')
+//   $('#grid').off('click')
+//   $('#announcement').html('Logging out…')
+//   api.signOut()
+//     .then(logOutSuccess)
+//     .catch(logOutFailure)
+// }
+//
+// const logOutSuccess = function (objResponse) {
+//   $('#announcement').html('')
+//   addLogInRegister()
+// }
+//
+// const logOutFailure = function (objResponse) {
+//   // Usually this is a token value problem.
+// }
 
 const onSignUp = function (e) {
   // event.target must be an HTML form
@@ -167,4 +168,4 @@ const signUpFailure = function (objResponse) {
 //   // Mostly likely failure scenario is wrong old password.
 // }
 
-module.exports = {addLogInRegister}
+module.exports = {onLogIn, onSignUp}
