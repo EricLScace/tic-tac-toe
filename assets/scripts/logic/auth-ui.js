@@ -1,6 +1,7 @@
 'use strict'
-// Invoked by API responses & UI actions
+// Invoked by API responses & UI actions for register, log-in & log-out
 const api = require('./auth-api')
+const changePasswordTemplate = require('../templates/changePassword.handlebars')
 const getFormFields = require('../../../lib/get-form-fields')
 const objGameEvents = require('./game-ev')
 const Player = require('../objects/player')
@@ -8,6 +9,45 @@ const playerTemplate = require('../templates/player.handlebars')
 const signInRegisterTemplate = require('../templates/signInRegister.handlebars')
 const store = require('../store')
 
+//
+// const changePasswordSuccess = function (objResponse) {
+//   // API returns undefined.
+// }
+//
+// const changePasswordFailure = function (objResponse) {
+//   // Mostly likely failure scenario is wrong old password.
+// }
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// Change password functions
+const onChangePassword = function (e) {
+  // ALWAYS preventDefault first!
+  e.preventDefault()
+
+  // Enhancement: save the game & restore after password change completed or
+  // cancelled. For now, just leave an ongoing game in place.
+  // Display the change-password form
+  $('#player-name').html('Change ' + store.objPlayer.name + '\'s password:')
+  $('#player-actions').html(changePasswordTemplate())
+  $('#change-password').on('submit', onChange)
+  $('#cancel-button').on('click', onCancel)
+}
+
+const onCancel = function (e) {
+  // ALWAYS preventDefault first!
+  e.preventDefault()
+
+  // Remove click handlers
+  $('#change-password').off('submit')
+  $('#cancel-button').off('click')
+
+  // Restore player space on screen
+  displayLoggedInPlayer()
+}
+
+const onChange = function (e) {
+  // equal passwords?
+}
 //
 // const onChangePassword = function (event) {
 //   event.preventDefault()
@@ -19,11 +59,25 @@ const store = require('../store')
 //     .catch(ui.changePasswordFailure)
 // }
 
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // Log-in functions
 const addLogInRegister = function () {
   $('#player').html(signInRegisterTemplate())
   $('#sign-in').on('submit', onLogIn)
   $('#sign-up').on('submit', onSignUp)
+}
+
+const displayLoggedInPlayer = function () {
+  // Load player space on screen
+  $('#player').html(playerTemplate())
+  // When load completes, insert logged-in user name
+  $('#player-name').html(store.objPlayer.name + ' logged in.')
+  // Add log-out & change-password buttons & event handlers
+  $('#player-actions').html('<input type="button" id="log-out-button" value="Log out">')
+  $('#log-out-button').on('click', onLogOut)
+  // Add change-password button
+  $('#player-actions').append('<input type="button" id="change-password-button" value="Change password">')
+  $('#change-password-button').on('click', onChangePassword)
 }
 
 const onLogIn = function (e) {
@@ -36,6 +90,7 @@ const onLogIn = function (e) {
       null, // no ID
       null, // no token
       objProfferedCredentials.credentials.password)
+
     // Cache credentials in store
     store.objPlayer = objPlayer
   }
@@ -60,14 +115,8 @@ const logInSuccess = function (objResponse) {
     objResponse.user.id,
     objResponse.user.token)
 
-  // Load player space on screen
-  const playerHtml = playerTemplate()
-  $('#player').html(playerHtml)
-  // When load completes, insert logged-in user name
-  $('#player-name').html(store.objPlayer.name + ' logged in.')
-  // Add log-out button & event handler
-  $('#player-actions').html('<input type="button" id="log-out-button" value="Log out">')
-  $('#log-out-button').on('click', onLogOut)
+  // Show logged-in player on screen & her ongoing choices: log-out, change-password.
+  displayLoggedInPlayer()
 
   // Load & start new game
   objGameEvents.onNewGame()
@@ -79,6 +128,7 @@ const logInFailure = function (objResponse) {
   $('#announcement').html('<br>Name or password not recognized. Try again, or re-register.')
 }
 
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // Log out functions
 const onLogOut = function (e) {
   e.preventDefault()
@@ -101,6 +151,8 @@ const logOutFailure = function (objResponse) {
   // Usually this is a token value problem.
 }
 
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// Register a new user functions
 const onSignUp = function (e) {
   // event.target must be an HTML form
   // prefer coding 'event.target' rather than 'this'
@@ -157,14 +209,5 @@ const signUpFailure = function (objResponse) {
   // }
   $('#player').html('Registration failed.')
 }
-
-//
-// const changePasswordSuccess = function (objResponse) {
-//   // API returns undefined.
-// }
-//
-// const changePasswordFailure = function (objResponse) {
-//   // Mostly likely failure scenario is wrong old password.
-// }
 
 module.exports = {addLogInRegister}

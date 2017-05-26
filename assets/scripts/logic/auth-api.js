@@ -77,6 +77,4 @@ module.exports = {
 
 // .then((response) => {
 //   console.log('api.signUp AJAX response:', response)
-  // store.userToken = response.user.token
-  // return store.userToken
 // })

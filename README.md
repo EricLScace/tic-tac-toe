@@ -189,7 +189,13 @@ __3.3 Wireframes and UX flow__
 
 > In the interests of meeting submission deadlines, migration to this module structure will be done incrementally on an as-needed basis while implementing remaining required features.
 
->__3.15 Miscellaneous bug fixes__ See issue logs.
+> (Later): attempting to implement this structure for one UX action did not work. Circular requires still existed. Furthermore, the code base was too fractured to clearly understand what was happening. Abandoned this approach entirely & reverted.
+
+> The consequence is that auth-ui becomes very large. It might be possible to split this between log-in/register/log-out (already big) and password-change functions, but time is not available to experiment. Some research is needed on how to avoid require loops.
+
+>__3.15 Implement password change__
+
+>__3.16 Miscellaneous bug fixes__ See issue logs.
 
 __4. Unsolved problems for future releases__
   This list is maintained in the GitHub Issues section.
