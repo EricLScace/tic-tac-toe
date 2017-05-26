@@ -1,12 +1,9 @@
 'use strict'
-
 // Contains all calls to the authentication API
-
 const config = require('../config')
-const objPlayer = require('../objects/player')
 
 // Invokes sign-up API
-const signUp = function (objSignUp) {
+const signUp = function (objProfferedCredentials) {
   // per API documentation, objSignUp must be of form:
   // {
   //   credentials: {
@@ -16,15 +13,11 @@ const signUp = function (objSignUp) {
   //   }
   // }
 
-  // Cache credentials for log-in after successful registration
-  objPlayer.fnIsLoggedIn(
-    null, objSignUp.credentials.email, objSignUp.credentials.password)
-
   // Attempt to register
   return $.ajax({
     url: config.apiOrigin + '/sign-up',
     method: 'POST',
-    data: objSignUp
+    data: objProfferedCredentials
   })
 }
 
@@ -36,10 +29,6 @@ const signIn = function (objSignIn) {
   //     password: "string"
   //   }
   // }
-
-  // Cache credentials for re-authentication on password change
-  objPlayer.fnIsLoggedIn(
-    null, objSignIn.credentials.email, objSignIn.credentials.password)
 
   return $.ajax({
     url: config.apiOrigin + '/sign-in',

@@ -2,6 +2,8 @@
 
 const api = require('./auth-api')
 const getFormFields = require('../../../lib/get-form-fields')
+const Player = require('../objects/player')
+const store = require('../store')
 const ui = require('./auth-ui')
 
 // event.target must be an HTML form
@@ -9,11 +11,17 @@ const onSignUp = function (e) {
   // prefer coding 'event.target' rather than 'this'
   // ALWAYS preventDefault first!
   e.preventDefault()
-
-  const objSignUp = getFormFields(e.target)
-
+  // Save player's proffered credentials
+  const objProfferedCredentials = getFormFields(e.target)
+  const objPlayer = new Player(null, // not logged in yet
+    objProfferedCredentials.credentials.email,
+    null, // no ID
+    null, // no token
+    objProfferedCredentials.credentials.password)
+  // Cache credentials in store
+  store.objPlayer = objPlayer
   // use AJAX to initiate HTTP request, defined in api module, for sign-up
-  api.signUp(objSignUp)
+  api.signUp(objProfferedCredentials)
     // Promise .then waits for the async operation
     // Mandatory to avoid race conditions introduced by network delays
     .then(ui.signUpSuccess)
@@ -24,8 +32,18 @@ const onSignUp = function (e) {
 
 const onSignIn = function (e) {
   e.preventDefault()
-  const objSignIn = getFormFields(e.target)
-  api.signIn(objSignIn)
+  const objProfferedCredentials = getFormFields(e.target)
+  // If there are no cached credentials, create them
+  if (!store.objPlayer) {
+    const objPlayer = new Player(null, // not logged in yet
+      objProfferedCredentials.credentials.email,
+      null, // no ID
+      null, // no token
+      objProfferedCredentials.credentials.password)
+    // Cache credentials in store
+    store.objPlayer = objPlayer
+  }
+  api.signIn(objProfferedCredentials)
     .then(ui.signInSuccess)
     .catch(ui.signInFailure)
 }
@@ -41,7 +59,7 @@ const onSignIn = function (e) {
 //     .catch(ui.changePasswordFailure)
 // }
 
-const addHandlers = () => {
+const addLogInRegisterHandlers = () => {
   // on gives the callback an event (provided by the browser) as first argument
   // forms fire 'submit' events. Do not listen for click on the input button, as
   // we will not received data from the form.
@@ -52,5 +70,5 @@ const addHandlers = () => {
 }
 
 module.exports = {
-  addHandlers
+  addLogInRegisterHandlers
 }

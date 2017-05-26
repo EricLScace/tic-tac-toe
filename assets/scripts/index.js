@@ -17,7 +17,7 @@ $(() => {
   // needed to be sure form is ready to fire event).
   const signInRegisterHtml = signInRegisterTemplate()
   $('#player').html(signInRegisterHtml)
-  authEvents.addHandlers()
+  authEvents.addLogInRegisterHandlers()
 })
 
 // use require with a reference to bundle the file and use it in this file
