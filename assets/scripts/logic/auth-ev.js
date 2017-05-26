@@ -22,13 +22,13 @@ const onSignUp = function (e) {
     .catch(ui.signUpFailure)
 }
 
-const onSignIn = function (e) {
-  e.preventDefault()
-  const objSignIn = getFormFields(e.target)
-  api.signIn(objSignIn)
-    .then(ui.signInSuccess)
-    .catch(ui.signInFailure)
-}
+// const onSignIn = function (e) {
+//   e.preventDefault()
+//   const objSignIn = getFormFields(e.target)
+//   api.signIn(objSignIn)
+//     .then(ui.signInSuccess)
+//     .catch(ui.signInFailure)
+// }
 
 //
 // const onChangePassword = function (event) {
@@ -53,6 +53,6 @@ const onSignIn = function (e) {
 
 module.exports = {
 //  addHandlers
-  onSignIn,
+  // onSignIn,
   onSignUp
 }

@@ -1,13 +1,15 @@
 'use strict'
+
 const config = require('./config')
-const playerAuthnTx = require('./logic/authN/playerAuthnTx')
+const authnTx = require('./logic/authN/authnTx')
 const setAPIOrigin = require('../../lib/set-api-origin')
 
 // Wait for document to be ready
 $(() => {
   setAPIOrigin(location, config)
   // kick off by asking for log-in or registration
-  playerAuthnTx.readyToLogInRegister()
+  console.log('index.js: document ready')
+  authnTx.readyToLogInRegister()
 })
 
 // use require with a reference to bundle the file and use it in this file

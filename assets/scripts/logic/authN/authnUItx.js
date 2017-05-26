@@ -1,10 +1,14 @@
 'use strict'
-const authEvents = require('../auth-ev')
+const authnUIrx = require('./authnUIrx')
 const signInRegisterTemplate = require('../../templates/signInRegister.handlebars')
 
-const loggingOutPlayer = function () {
-  console.log('authnUItx: loggingOutPlayer')
+const announceLoggingIn = function () {
+  $('#announcement').html('Logging in…')
 }
+
+// const loggingOutPlayer = function () {
+//   console.log('authnUItx: loggingOutPlayer')
+// }
 
 // No one is logged in.
 const solicitingLogInRegister = function () {
@@ -13,11 +17,11 @@ const solicitingLogInRegister = function () {
   // Load player's log-in/registration forms into UI
   const signInRegisterHtml = signInRegisterTemplate()
   $('#player').html(signInRegisterHtml)
-  $('#sign-in').on('submit', authEvents.onSignIn)
-  $('#sign-up').on('submit', authEvents.onSignUp)
+  authnUIrx.addLogInRegisterHandlers()
 }
 
 module.exports = {
-  loggingOutPlayer,
+  announceLoggingIn,
+  // loggingOutPlayer,
   solicitingLogInRegister
 }

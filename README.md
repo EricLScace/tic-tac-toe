@@ -148,7 +148,8 @@ __3.3 Wireframes and UX flow__
 >>- changePassword
 * __authnAPIrx__: event listeners for the remote API server's responses about authentication:
 >>- rxSignUp
->>- rxSignIn
+>>- rxlogInOK
+>>- rxLogInFail
 >>- rxSignOut
 >>- rxChangePassword
 * __authnUItx__: exposes methods to playerAuthn for transmitting semantic instructions for changes to the DOM/UI:
@@ -168,6 +169,7 @@ __3.3 Wireframes and UX flow__
 > __playerAuthnTx__ exposes these methods:
 >* for gameController: readyToLogOut
 >* for index.js: readyToLogInRegister
+>* for playerAuthnRx: logIn
 >
 > __gameController__ provides overall supervision of the game.
 * __gameAPItx__: exposes methods to gameController for transmitting requests about games to the remote API server:

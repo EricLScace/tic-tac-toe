@@ -1,11 +1,21 @@
 'use strict'
-const gameController = require('../game/gameController')
+const authnTx = require('./authnTx')
+// const gameController = require('../game/gameController')
 
-const logOutRequested = function () {
-  console.log('playerAuthnRx: logOutRequested')
-  // Pass request to gameController first.
-  // If a game is in progress, it should be saved first before log-out starts.
-  gameController.logOutRequested()
+// User submitted log-in form
+const logInRequested = function (objProferredCredentials) {
+  console.log('playerAuthnRx: logInRequested', objProferredCredentials)
+  // Log-in form validation checks
+  // If OK, ask playerAuthnTx to log in User
+  authnTx.xxx(objProferredCredentials)
+}
+
+// User clicked to log-out
+// const logOutRequested = function () {
+//   console.log('playerAuthnRx: logOutRequested')
+//   // Pass request to gameController first.
+//   // If a game is in progress, it should be saved first before log-out starts.
+//   gameController.logOutRequested()
   // $('#announcement').html('Logging out…')
   // Remove the log-out click handler and button
 
@@ -16,8 +26,9 @@ const logOutRequested = function () {
   //   api.signOut()
   //     .then(ui.signOutSuccess)
   //     .catch(ui.signOutFailure)
-}
+// }
 
 module.exports = {
-  logOutRequested
+  logInRequested
+  // logOutRequested
 }
