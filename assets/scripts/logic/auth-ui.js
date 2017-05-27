@@ -132,8 +132,8 @@ const logInSuccess = function (objResponse) {
 
   // Request game history of this player
   gameAPI.getMyGames()
-    .then(store.objPlayer.getMyGamesSuccess)
-    .catch(store.objPlayer.getMyGamesFailure)
+    .then(getMyGamesSuccess)
+    .catch(getMyGamesFailure)
 
   // Show logged-in player on screen & her ongoing choices: log-out, change-password.
   displayLoggedInPlayer()
@@ -146,6 +146,22 @@ const logInFailure = function (objResponse) {
   // API returns a 401 (Unauthorized) failure with object containing:
   // statusText: "Unauthorized"
   $('#announcement').html('<br>Name or password not recognized. Try again, or re-register.')
+}
+
+const getMyGamesSuccess = function (objResponse) {
+  console.log('auth=ui: getMyGamesSuccess', objResponse)
+  if (objResponse.games.length) {
+    $('#player-name').append(`<br> ${objResponse.games.length} games recorded.`)
+  } else {
+    $('#player-name').append('<br>No games recorded.')
+  }
+}
+
+const getMyGamesFailure = function (objResponse) {
+  console.log('auth=ui: getMyGamesFailure', objResponse)
+  if (objResponse.responseText.includes('Not Found')) {
+    $('#player-name').append(`<br>No games recorded.`)
+  }
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====

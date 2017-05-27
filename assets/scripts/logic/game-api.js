@@ -7,7 +7,7 @@ const store = require('../store')
 // Generates a 404 error is no games exist
 const getMyGames = function () {
   return $.ajax({
-    url: config.apiOrigin + '/games/',
+    url: config.apiOrigin + '/games/' + store.objPlayer.id,
     method: 'GET',
     headers: {
       'Authorization': 'Token token=' + store.objPlayer.authNToken
