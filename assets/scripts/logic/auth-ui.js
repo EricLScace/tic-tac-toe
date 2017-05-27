@@ -158,7 +158,8 @@ const getMyGamesSuccess = function (objResponse) {
 }
 
 const getMyGamesFailure = function (objResponse) {
-  console.log('auth=ui: getMyGamesFailure', objResponse)
+  // When the player ID doesn't exist in the game database, a 404 'not found'
+  // error is returned.
   if (objResponse.responseText.includes('Not Found')) {
     $('#player-name').append(`<br>No games recorded.`)
   }
@@ -168,8 +169,8 @@ const getMyGamesFailure = function (objResponse) {
 // Log out functions
 const onLogOut = function (e) {
   e.preventDefault()
-  // // Store the game at the server, if one was in progess.
-  // // Clear game grid & remove its click handler
+
+  // Clear game grid & remove its click handler
   $('#grid').html('')
   $('#grid').off('click')
   $('#announcement').html('Logging out…')
@@ -179,6 +180,7 @@ const onLogOut = function (e) {
 }
 
 const logOutSuccess = function (objResponse) {
+  // Remove 'logging out' message and display log-in/register forms
   $('#announcement').html('')
   addLogInRegister()
 }
@@ -198,14 +200,13 @@ const onSignUp = function (e) {
 
   // Save player's proffered credentials
   const objProfferedCredentials = getFormFields(e.target)
-  const objPlayer = new Player(null, // not logged in yet
+
+  // Re-instantiate the player in store
+  store.objPlayer = new Player(null, // not logged in yet
     objProfferedCredentials.credentials.email,
     null, // no ID
     null, // no token
     objProfferedCredentials.credentials.password)
-
-  // Cache credentials in store
-  store.objPlayer = objPlayer
 
   // use AJAX to initiate HTTP request, defined in api module, for sign-up
   authAPI.signUp(objProfferedCredentials)
@@ -225,11 +226,7 @@ const signUpSuccess = function (objResponse) {
   //     id: int
   //   }
   // }
-
-  // Remove event handlers
-  // $('#sign-in').off('submit')
-  // $('#sign-up').off('submit')
-
+  // Should log in the newly-registered user, but for now
   // Re-init the registration form fields
 
   // Display welcome announcement.

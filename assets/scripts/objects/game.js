@@ -1,6 +1,6 @@
 'use strict'
-
 const AllPaths = require('./all-paths')
+const gameAPI = require('../logic/game-api')
 
 // Define Game constructor
 const Game = function () {
@@ -8,6 +8,9 @@ const Game = function () {
   // expected values: 'x', 'o', ''
   this._arrSquareStates = ['', '', '', '', '', '', '', '', '']
   this._strTurn = 'X'
+
+  // Start new game on server
+  gameAPI.startGame()
 }
 
 // AddMove attempts to add the next move at the specified
@@ -36,29 +39,27 @@ Game.prototype.addMove = function (intSquareIndex) {
   // Instantiate an AllPaths to evaluate the state of play
   const objAllPaths = new AllPaths(this._arrSquareStates)
 
-  // If game is a draw…
-  if (objAllPaths.isDraw) {
+  // If game is a draw or win…
+  if (objAllPaths.isDraw || objAllPaths.isWin) {
     // Tell server game is over
-    // Post announcement
-    $('#announcement').html('Game is a draw.')
+    gameAPI.finished()
 
-    // Return true
-    return true
-  }
-  if (objAllPaths.isWin) {
-  // If game is won
-    // Tell server game is over
-    // Highlight winning paths
-    // Post announcement
-    $('#announcement').html(this._strTurn + ' won!')
+    if (objAllPaths.isWin) {
+      // Post announcement of win
+      $('#announcement').html(this._strTurn + ' won!')
+      // Highlight winning paths
+    } else {
+      // Post announcement of win
+      $('#announcement').html('Game is a draw.')
+    }
 
-    // Refresh player win total
-    // Return true
+    // Return true to indicate game is over
     return true
   }
 
   // Else games continues
   // Update server with move
+  gameAPI.addMove()
 
   // Post announcement: who plays next
   // Change turn
@@ -66,7 +67,7 @@ Game.prototype.addMove = function (intSquareIndex) {
   $('#announcement').html(this._strTurn + '\'s turn…')
   // ... and does he have to be careful?
   // ... or is he doomed?
-  // Return null
+  // Return false to indicate game continues
   return false
 }
 

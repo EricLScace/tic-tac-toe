@@ -46,7 +46,8 @@ const signIn = function (objProfferedCredentials) {
     data: objProfferedCredentials
   })
 }
-// Invokes sign-up API
+
+// Invokes sign-up API to register a new player
 const signUp = function (objProfferedCredentials) {
   // per API documentation, objSignUp must be of form:
   // {
@@ -63,6 +64,7 @@ const signUp = function (objProfferedCredentials) {
   })
 }
 
+// Log off the player
 const signOut = function () {
   return $.ajax({
     url: config.apiOrigin + '/sign-out/' + store.objPlayer.id,
@@ -79,17 +81,3 @@ module.exports = {
   signOut,
   signUp
 }
-
-// Can be used to debug random error handling
-// new Promise(function (resolve, reject) {
-//   if (Math.random() > 0.5) {
-//     resolve('in signUp')
-//   } else {
-//     const error = new Error('Random')
-//     error.data = data
-//     reject(error)
-//   }
-
-// .then((response) => {
-//   console.log('api.signUp AJAX response:', response)
-// })
