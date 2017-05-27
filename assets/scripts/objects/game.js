@@ -19,6 +19,8 @@ const Game = function () {
 // • updates the server after each move
 // Returns true if game is over (draw or win)
 Game.prototype.addMove = function (intSquareIndex) {
+  // Ignore if user did not click in the grid.
+  if (!intSquareIndex) { return false }
   // Can this square be marked?
   if (this._arrSquareStates[intSquareIndex] !== '') {
     // No. Ignore move & post advice
