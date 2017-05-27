@@ -1,7 +1,8 @@
 'use strict'
 // Invoked by API responses & UI actions for register, log-in & log-out
-const api = require('./auth-api')
+const authAPI = require('./auth-api')
 const changePasswordTemplate = require('../templates/changePassword.handlebars')
+const gameAPI = require('./game-api')
 const getFormFields = require('../../../lib/get-form-fields')
 const objGameEvents = require('./game-ev')
 const Player = require('../objects/player')
@@ -41,7 +42,7 @@ const onChange = function (e) {
   e.preventDefault()
 
   // Future: check that passwords were equal
-  api.changePassword(getFormFields(e.target))
+  authAPI.changePassword(getFormFields(e.target))
     .then(changePasswordSuccess)
     .catch(changePasswordFailure)
 }
@@ -107,7 +108,8 @@ const onLogIn = function (e) {
     // Cache credentials in store
     store.objPlayer = objPlayer
   }
-  api.signIn(objProfferedCredentials)
+
+  authAPI.signIn(objProfferedCredentials)
     .then(logInSuccess)
     .catch(logInFailure)
 }
@@ -127,6 +129,11 @@ const logInSuccess = function (objResponse) {
     objResponse.user.email,
     objResponse.user.id,
     objResponse.user.token)
+
+  // Request game history of this player
+  gameAPI.getMyGames()
+    .then(store.objPlayer.getMyGamesSuccess)
+    .catch(store.objPlayer.getMyGamesFailure)
 
   // Show logged-in player on screen & her ongoing choices: log-out, change-password.
   displayLoggedInPlayer()
@@ -150,7 +157,7 @@ const onLogOut = function (e) {
   $('#grid').html('')
   $('#grid').off('click')
   $('#announcement').html('Logging out…')
-  api.signOut()
+  authAPI.signOut()
     .then(logOutSuccess)
     .catch(logOutFailure)
 }
@@ -185,7 +192,7 @@ const onSignUp = function (e) {
   store.objPlayer = objPlayer
 
   // use AJAX to initiate HTTP request, defined in api module, for sign-up
-  api.signUp(objProfferedCredentials)
+  authAPI.signUp(objProfferedCredentials)
     // Promise .then waits for the async operation
     // Mandatory to avoid race conditions introduced by network delays
     .then(signUpSuccess)

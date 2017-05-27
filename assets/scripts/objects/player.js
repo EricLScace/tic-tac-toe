@@ -1,5 +1,4 @@
 'use strict'
-
 // Although one could just pass in the authentication object from the API sign-in,
 // the following approach decouples the API design from the internals
 // of the client.
@@ -50,14 +49,12 @@ Player.prototype.setLogInStatus = function (bool, strName, strId, strAuthNToken,
   return this._isLoggedIn
 }
 
-// Player.prototype.getCredentials = function () {
-//   return {
-//       credentials: {
-//         email: this.name,
-//         id: this.id,
-//         password_confirmation: "string"
-//       }
-//   }
-// }
+Player.prototype.getMyGamesSuccess = function (obj) {
+  //
+}
+
+Player.prototype.getMyGamesFailure = function (obj) {
+  // Returns 404 if the player has no games
+}
 
 module.exports = Player

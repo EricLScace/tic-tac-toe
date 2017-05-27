@@ -194,8 +194,13 @@ __3.3 Wireframes and UX flow__
 > The consequence is that auth-ui becomes very large. It might be possible to split this between log-in/register/log-out (already big) and password-change functions, but time is not available to experiment. Some research is needed on how to avoid require loops.
 
 >__3.15 Implement password change__
+> Some minor UX deficiencies left for attack after the game down- and up-load  is added.
 
->__3.16 Miscellaneous bug fixes__ See issue logs.
+>__3.16 Game upload/download__
+> Implemented player game counts in the Player class.
+
+
+>__3.17 Miscellaneous bug fixes__ See issue logs. I learned that one can past a link to an issue in the Git Commit message, which is a valuable tracking tool.
 
 __4. Unsolved problems for future releases__
   This list is maintained in the GitHub Issues section.

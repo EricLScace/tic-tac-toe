@@ -3,48 +3,6 @@
 const config = require('../config')
 const store = require('../store')
 
-// Invokes sign-up API
-const signUp = function (objProfferedCredentials) {
-  // per API documentation, objSignUp must be of form:
-  // {
-  //   credentials: {
-  //     email: "string",
-  //     password: "string",
-  //     password_confirmation: "string"
-  //   }
-  // }
-  return $.ajax({
-    url: config.apiOrigin + '/sign-up',
-    method: 'POST',
-    data: objProfferedCredentials
-  })
-}
-
-const signIn = function (objProfferedCredentials) {
-  // per API documentation, objSignIn must be of form:
-  // {
-  //   credentials: {
-  //     email: "string",
-  //     password: "string"
-  //   }
-  // }
-  return $.ajax({
-    url: config.apiOrigin + '/sign-in',
-    method: 'POST',
-    data: objProfferedCredentials
-  })
-}
-
-const signOut = function () {
-  return $.ajax({
-    url: config.apiOrigin + '/sign-out/' + store.objPlayer.id,
-    method: 'DELETE',
-    headers: {
-      'Authorization': 'Token token=' + store.objPlayer.authNToken
-    }
-  })
-}
-
 const changePassword = function (objProfferedCredentials) {
   // const blob = {
   //   url: config.apiOrigin + '/change-password/' + store.objPlayer.id,
@@ -70,6 +28,47 @@ const changePassword = function (objProfferedCredentials) {
         'old': objProfferedCredentials.credentials.old,
         'new': objProfferedCredentials.credentials.new
       }
+    }
+  })
+}
+
+const signIn = function (objProfferedCredentials) {
+  // per API documentation, objSignIn must be of form:
+  // {
+  //   credentials: {
+  //     email: "string",
+  //     password: "string"
+  //   }
+  // }
+  return $.ajax({
+    url: config.apiOrigin + '/sign-in',
+    method: 'POST',
+    data: objProfferedCredentials
+  })
+}
+// Invokes sign-up API
+const signUp = function (objProfferedCredentials) {
+  // per API documentation, objSignUp must be of form:
+  // {
+  //   credentials: {
+  //     email: "string",
+  //     password: "string",
+  //     password_confirmation: "string"
+  //   }
+  // }
+  return $.ajax({
+    url: config.apiOrigin + '/sign-up',
+    method: 'POST',
+    data: objProfferedCredentials
+  })
+}
+
+const signOut = function () {
+  return $.ajax({
+    url: config.apiOrigin + '/sign-out/' + store.objPlayer.id,
+    method: 'DELETE',
+    headers: {
+      'Authorization': 'Token token=' + store.objPlayer.authNToken
     }
   })
 }
