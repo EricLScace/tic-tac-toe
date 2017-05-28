@@ -191,14 +191,20 @@ const onSignUp = function (e) {
     null, // no token
     objProfferedCredentials.credentials.password)
 
-  // use AJAX to initiate HTTP request, defined in api module, for sign-up
-  authAPI.signUp(objProfferedCredentials)
-    // Promise .then waits for the async operation
-    // Mandatory to avoid race conditions introduced by network delays
-    .then(signUpSuccess)
-    // subsequent .then will pass the return from the previous .then as the
-    // first argument to the callback function.
-    .catch(signUpFailure)
+  // Avoid white space at start or end of his name.
+  if (/\s/.test(store.objPlayer.name.slice(-1)) ||
+    /\s/.test(store.objPlayer.name.slice(0))) {
+    $('#announcement').html('Please do not use non-printing characters at the start or end of your name.')
+  } else {
+    // use AJAX to initiate HTTP request, defined in api module, for sign-up
+    authAPI.signUp(objProfferedCredentials)
+      // Promise .then waits for the async operation
+      // Mandatory to avoid race conditions introduced by network delays
+      .then(signUpSuccess)
+      // subsequent .then will pass the return from the previous .then as the
+      // first argument to the callback function.
+      .catch(signUpFailure)
+  }
 }
 
 const signUpSuccess = function (objResponse) {
