@@ -2,15 +2,14 @@ __Content__
 >1. Links to wireframes & user stories.
 >2. Technologies used
 >3. Development story
->4. Unsolved problems for future releases
+>4. User stories
+>5. Unsolved problems for future releases
 
 __1. Link__
 
 >• Wireframes are stored in GitHub here:
   https://github.com/EricLScace/tic-tac-toe/blob/master/ui%20ux/TTT%20wireframe%20auth%20v1-0.jpg
   https://github.com/EricLScace/tic-tac-toe/blob/master/ui%20ux/TTT%20wireframe%20v1-0.jpg
-
->• User stories: to be provided.
 
 __2. Technologies uses__
 
@@ -201,5 +200,22 @@ __3.3 Wireframes and UX flow__
 
 >__3.17 Miscellaneous bug fixes__ See issue logs. I learned that one can past a link to an issue in the Git Commit message, which is a valuable tracking tool.
 
-__4. Unsolved problems for future releases__
+__4. User stories__
+Alice & Bob wish to play tic-tac-toe. Lacking a paper pad and pen, they use Alice's laptop and this website.
+
+Alice registers. Upon successful registration, her laptop immediately displays a blank game grid. Because she is a new registrant, there are no games in her history.
+
+She and Bob take turns clicking on the game grid. Alice wins, and the website declares her X's as the winner. She agrees to play another game, and a new blank grid replaces the previous game. Alice notices she now has 1 game in the archives.
+
+They play another game. Before the board is completely full, they are informed that this game will end in a draw. They elect to play another. Alice sees she now has 2 games in the archives.
+
+During the next game, Alice decides the Bob has seen her password entry from the initial registration. She clicks to change her password while Bob makes martinis. The game board remains undisturbed while Alice starts the password change process. But before she can finish entering a new password, Bob returns with drinks. They continue to finish the game. Bob wins, and they start another.
+
+Bob decides his drink needs more olives. Alice finishes the password change, and the website informs her that her password has been altered. After Bob returns and the game-in-progress completes, Alice sees that 4 games are in archive.
+
+Alice logs out so that she and Bob can snuggle by the fireplace to finish their martinis.
+
+Stay tuned for more adventures of Alice and Bob when version 2 starts development!
+
+__5. Unsolved problems for future releases__
   This list is maintained in the GitHub Issues section.
