@@ -216,11 +216,7 @@ const signUpSuccess = function (objResponse) {
 }
 
 const signUpFailure = function (objResponse) {
-  // API returns an JSON containing one useful key-value pair:
-  // responseText: {
-  //   "email":["has already been taken"]
-  // }
-  $('#player').html('Registration failed.')
+  $('#announcement').html('That name is probably already taken. Try something else.')
 }
 
 module.exports = {addLogInRegister}
