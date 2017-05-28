@@ -197,8 +197,7 @@ __3.3 Wireframes and UX flow__
 > Some minor UX deficiencies left for attack after the game down- and up-load  is added.
 
 >__3.16 Game upload/download__
-> Implemented player game counts in the Player class.
-
+> Implemented player game counts in the Player class. Cleaned up division of responsibility between game-api (API call formatting only), Game object (game logic), and game-ui (was called game-ev, but now handles only UI events & updates). Ideally this kind of logic should apply to the authentication modules, but there isn't time to do regression testing of refactored code.
 
 >__3.17 Miscellaneous bug fixes__ See issue logs. I learned that one can past a link to an issue in the Git Commit message, which is a valuable tracking tool.
 

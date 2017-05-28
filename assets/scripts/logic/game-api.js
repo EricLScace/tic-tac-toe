@@ -4,38 +4,55 @@ const config = require('../config')
 const store = require('../store')
 
 // Add a new game or move
-const addMove = function () {}
-
-// Game is finished
-const finished = function () {}
+const addMove = function (intCell, strXO) {
+  return $.ajax({
+    url: config.apiOrigin + '/games/' + store.objGame.id,
+    method: 'PATCH',
+    headers: {
+      'Authorization': 'Token token=' + store.objPlayer.authNToken
+    },
+    data: {
+      'game': {
+        'cell': {
+          'index': intCell,
+          'value': strXO
+        },
+        'over': store.objGame.isFinished
+      }
+    }
+  })
+}
 
 // Fetch games for this player
-// Generates a 404 error if no games exist for this player ID.
 const getMyGames = function () {
   return $.ajax({
-    url: config.apiOrigin + '/games/' + store.objPlayer.id,
+    url: config.apiOrigin + '/games?over=true',
     method: 'GET',
     headers: {
       'Authorization': 'Token token=' + store.objPlayer.authNToken
+    },
+    data: {
+      credentials: {
+        'id': store.objPlayer.id
+      }
     }
   })
 }
 
 // Start a new game
 const startGame = function () {
-  // return $.ajax({
-  //   url: config.apiOrigin + '/games',
-  //   method: 'POST',
-  //   headers: {
-  //     'Authorization': 'Token token=' + store.objPlayer.authNToken
-  //   },
-  //   data: {}
-  // })
+  return $.ajax({
+    url: config.apiOrigin + '/games',
+    method: 'POST',
+    headers: {
+      'Authorization': 'Token token=' + store.objPlayer.authNToken
+    },
+    data: {}
+  })
 }
 
 module.exports = {
   addMove,
-  finished,
   getMyGames,
   startGame
 }

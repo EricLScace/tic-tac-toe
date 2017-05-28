@@ -123,46 +123,24 @@ const logInSuccess = function (objResponse) {
   //     token: "string"
   //   }
   // }
-
+  $('#announcement').html('Logging in…')
   // Update player credentials
   store.objPlayer.setLogInStatus(true, // logged in
     objResponse.user.email,
     objResponse.user.id,
     objResponse.user.token)
 
-  // Request game history of this player
-  gameAPI.getMyGames()
-    .then(getMyGamesSuccess)
-    .catch(getMyGamesFailure)
-
   // Show logged-in player on screen & her ongoing choices: log-out, change-password.
   displayLoggedInPlayer()
 
   // Load & start new game
-  objGameEvents.onNewGame()
+  objGameEvents.newGame()
 }
 
 const logInFailure = function (objResponse) {
   // API returns a 401 (Unauthorized) failure with object containing:
   // statusText: "Unauthorized"
   $('#announcement').html('<br>Name or password not recognized. Try again, or re-register.')
-}
-
-const getMyGamesSuccess = function (objResponse) {
-  console.log('auth=ui: getMyGamesSuccess', objResponse)
-  if (objResponse.games.length) {
-    $('#player-name').append(`<br> ${objResponse.games.length} games recorded.`)
-  } else {
-    $('#player-name').append('<br>No games recorded.')
-  }
-}
-
-const getMyGamesFailure = function (objResponse) {
-  // When the player ID doesn't exist in the game database, a 404 'not found'
-  // error is returned.
-  if (objResponse.responseText.includes('Not Found')) {
-    $('#player-name').append(`<br>No games recorded.`)
-  }
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====

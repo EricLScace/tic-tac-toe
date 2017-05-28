@@ -4,19 +4,6 @@ const config = require('../config')
 const store = require('../store')
 
 const changePassword = function (objProfferedCredentials) {
-  // const blob = {
-  //   url: config.apiOrigin + '/change-password/' + store.objPlayer.id,
-  //   method: 'PATCH',
-  //   headers: {
-  //     'Authorization': 'Token token=' + store.objPlayer.authNToken
-  //   },
-  //   data: {
-  //     'passwords': {
-  //       'old': objProfferedCredentials.credentials.old,
-  //       'new': objProfferedCredentials.credentials.new
-  //     }
-  //   }
-  // }
   return $.ajax({
     url: config.apiOrigin + '/change-password/' + store.objPlayer.id,
     method: 'PATCH',
