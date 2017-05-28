@@ -167,6 +167,9 @@ const logOutSuccess = function (objResponse) {
 
 const logOutFailure = function (objResponse) {
   // Usually this is a token value problem.
+  // Assume player token has expired and re-display log-in page.
+  $('#announcement').html('')
+  addLogInRegister()
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
