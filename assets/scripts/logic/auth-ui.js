@@ -41,8 +41,6 @@ const onCancel = function (e) {
 const onChange = function (e) {
   // ALWAYS preventDefault first!
   e.preventDefault()
-
-  // Future: check that passwords were equal
   authAPI.changePassword(getFormFields(e.target))
     .then(changePasswordSuccess)
     .catch(changePasswordFailure)
@@ -77,6 +75,8 @@ const addLogInRegister = function () {
   $('#player').html(signInRegisterTemplate())
   $('#sign-in').on('submit', onLogIn)
   $('#sign-up').on('submit', onSignUp)
+  // Add click handler to remove old announcements
+  $('#player').on('click', onClickClearAnnouncement)
 }
 
 const displayLoggedInPlayer = function (message) {
@@ -174,6 +174,10 @@ const logOutFailure = function (objResponse) {
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 // Register a new user functions
+const onClickClearAnnouncement = function () {
+  $('#announcement').html('')
+}
+
 const onSignUp = function (e) {
   // event.target must be an HTML form
   // prefer coding 'event.target' rather than 'this'
@@ -183,6 +187,11 @@ const onSignUp = function (e) {
 
   // Save player's proffered credentials
   const objProfferedCredentials = getFormFields(e.target)
+
+  // Force password confirmation to equal password for server
+  // If we are not asking user to double-enter passwords for change of password,
+  // then no need to double-enter password on account start-up.
+  objProfferedCredentials.credentials.password_confirmation = objProfferedCredentials.credentials.password
 
   // Re-instantiate the player in store
   store.objPlayer = new Player(null, // not logged in yet
