@@ -2,7 +2,6 @@
 // Invoked by API responses & UI actions for register, log-in & log-out
 const authAPI = require('./auth-api')
 const changePasswordTemplate = require('../templates/changePassword.handlebars')
-const gameAPI = require('./game-api')
 const getFormFields = require('../../../lib/get-form-fields')
 const objGameEvents = require('./game-ev')
 const Player = require('../objects/player')
@@ -16,8 +15,9 @@ const onChangePassword = function (e) {
   // ALWAYS preventDefault first!
   e.preventDefault()
 
-  // Enhancement: save the game & restore after password change completed or
-  // cancelled. For now, just leave an ongoing game in place.
+  // Suppress game statistics during password change-password
+  store.objPlayer.suppressStatistics = true
+
   // Display the change-password form
   $('#player-name').html('Change ' + store.objPlayer.name + '\'s password:')
   $('#player-actions').html(changePasswordTemplate())
@@ -34,6 +34,7 @@ const onCancel = function (e) {
   $('#cancel-button').off('click')
 
   // Restore player space on screen
+  store.objPlayer.suppressStatistics = false
   displayLoggedInPlayer()
 }
 
@@ -67,6 +68,7 @@ const changePasswordResults = function (isChanged) {
     ? store.objPlayer.name + '\'s password was changed.'
     : 'Could not change' + store.objPlayer.name + '\'s password right now. Try again later.'
   displayLoggedInPlayer(message)
+  store.objPlayer.suppressStatistics = false
 }
 
 // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====

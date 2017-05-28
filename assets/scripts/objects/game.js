@@ -122,7 +122,14 @@ const verifyGame = function (objResponse) {
   // assume the server is behind in recording moves and send it a correction.
   // Try this a max of 6 times for each move recording attempt.
   // objResponse.game.cells[]
-  console.log('game: verifyGame', objResponse)
+  for (let i = 0; i < 9; i++) {
+    if (objResponse.game.cells[i] !== store.objGame.arrSquareStates[i]) {
+      gameAPI.addMove(i, store.objGame.arrSquareStates[i])
+        .then(onAddMoveSuccess)
+        .catch(onAddMoveFailure)
+      return
+    }
+  }
 }
 
 module.exports = Game

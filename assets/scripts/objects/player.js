@@ -26,6 +26,7 @@ Player.prototype.setLogInStatus = function (bool, strName, strId, strAuthNToken,
       case true:
         // Accept proffered credentials as logged in.
         this._isLoggedIn = true
+        this.suppressStatistics = false
         this.id = strId
         this.authNToken = strAuthNToken
         break
@@ -33,6 +34,7 @@ Player.prototype.setLogInStatus = function (bool, strName, strId, strAuthNToken,
       case null:
         // Cache proffered name & password for future use
         this._isLoggedIn = null
+        this.suppressStatistics = false
         this.name = strName
         this._password = strPassword
         break
@@ -40,6 +42,7 @@ Player.prototype.setLogInStatus = function (bool, strName, strId, strAuthNToken,
       case false:
         // Log out a player by changing _isLoggedIn and erasing credentials.
         this._isLoggedIn = false
+        this.suppressStatistics = false
         this.name = ''
         this.id = ''
         this.authNToken = ''
@@ -47,14 +50,6 @@ Player.prototype.setLogInStatus = function (bool, strName, strId, strAuthNToken,
     }
   }
   return this._isLoggedIn
-}
-
-Player.prototype.getMyGamesSuccess = function (obj) {
-  //
-}
-
-Player.prototype.getMyGamesFailure = function (obj) {
-  // Returns 404 if the player has no games
 }
 
 module.exports = Player

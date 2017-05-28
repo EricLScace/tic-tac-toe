@@ -56,10 +56,12 @@ const gameFinished = function () {
 // Start a new game
 const newGame = function () {
   // Update player statistics
-  // Request game history of this player
-  gameAPI.getMyGames()
-    .then(getMyGamesSuccess)
-    .catch(getMyGamesFailure)
+  if (!store.objPlayer.suppressStatistics) {
+    // Request game history of this player
+    gameAPI.getMyGames()
+      .then(getMyGamesSuccess)
+      .catch(getMyGamesFailure)
+  }
 
   // Instatiate a new Game
   store.objGame = new Game()
@@ -79,16 +81,19 @@ const newGame = function () {
 }
 
 const getMyGamesSuccess = function (objResponse) {
-  console.log('auth=ui: getMyGamesSuccess', objResponse)
-  if (objResponse.games.length) {
-    $('#player-name').append(`<br> ${objResponse.games.length} game`)
-    if (objResponse.games.length === 1) {
-      $('#player-name').append(` recorded.`)
+  // Re-write the identity of the logged-in player, if not suppressing statistics
+  if (!store.objPlayer.suppressStatistics) {
+    $('#player-name').html(store.objPlayer.name + ' logged in.')
+    if (objResponse.games.length) {
+      $('#player-name').append(`<br> ${objResponse.games.length} game`)
+      if (objResponse.games.length === 1) {
+        $('#player-name').append(` recorded.`)
+      } else {
+        $('#player-name').append(`s recorded.`)
+      }
     } else {
-      $('#player-name').append(`s recorded.`)
+      $('#player-name').append('<br>No games recorded.')
     }
-  } else {
-    $('#player-name').append('<br>No games recorded.')
   }
 }
 
