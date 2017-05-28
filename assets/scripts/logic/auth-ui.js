@@ -202,20 +202,19 @@ const onSignUp = function (e) {
 }
 
 const signUpSuccess = function (objResponse) {
-  // API returns an object of form
-  // {
-  //   user: {
-  //     email: "string",
-  //     id: int
-  //   }
-  // }
-  // Should log in the newly-registered user, but for now
-  // Re-init the registration form fields
-
   // Display welcome announcement.
   $('#announcement').html('Welcome, ' +
     objResponse.user.email +
-    '. Please log in or register another user.')
+    '. Logging in…')
+  const objCredentials = {
+    credentials: {
+      email: store.objPlayer.name,
+      password: store.objPlayer._password
+    }
+  }
+  authAPI.signIn(objCredentials)
+    .then(logInSuccess)
+    .catch(logInFailure)
 }
 
 const signUpFailure = function (objResponse) {
