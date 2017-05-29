@@ -35,11 +35,13 @@ const AllPaths = function (arrSquareStates) {
 
   const _arrWinningPaths = []
   let _strWinningMark = ''
+  let _intFullPathCount = 0
   // Check every path
   for (let j = 0; j < 8; j++) {
     // Search for one or more winning paths
     // .isFull returns false if a path is not full;
     //   otherwise returns the mark that won
+    // If all 8 paths are full, and none has equal marks, then game is draw
     switch (this._arrAllPaths[j].isFull) {
       case 'X': {   // X won
         _strWinningMark = 'X'
@@ -50,6 +52,9 @@ const AllPaths = function (arrSquareStates) {
         _strWinningMark = 'O'
         _arrWinningPaths.push(this._arrAllPaths[j].arrPathIndices)
         break
+      }
+      case true: {
+        _intFullPathCount++
       }
     }
   }
@@ -67,6 +72,8 @@ const AllPaths = function (arrSquareStates) {
   // .isDraw = true if game is a draw; else false.
   // Works by proving a draw does NOT exist.
   this.isDraw = true
+  // Were all 8 paths full without a winning path?
+  if (_intFullPathCount === 8) { return 'draw' }
 
   // Check each path until a potential empty path that could be won is found.
   for (let i = 0; i < 8; i++) {

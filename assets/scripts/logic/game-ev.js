@@ -21,30 +21,29 @@ const onGridClick = function (e) {
       // Game contains mark of winner: add it to the grid
       $('#' + e.target.id).html(store.objGame.strTurn)
       gameFinished()
-      break
+      return store.objGame.strTurn
     case 'draw':
-      // Game contains mark of winner: add it to the grid
+      // Game contains mark of player: add it to the grid
       $('#' + e.target.id).html(store.objGame.strTurn)
       // Post announcement of draw
       $('#announcement').html('Game is a draw.')
       gameFinished()
-      break
+      return 'draw'
     case 'occupied':
       // Don't change the grid.
       $('#announcement').html(`Sorry ${store.objGame.strTurn}, you cannnot change an occupied square. Click an empty square.`)
-      break
+      return 'occupied'
     case false:
       // Game contains mark of next turn, so use the other mark on the grid.
       $('#' + e.target.id).html(store.objGame.strTurn === 'X' ? 'O' : 'X')
       $('#announcement').html(`${store.objGame.strTurn}'s turn…`)
       // ... and does he have to be careful?
       // ... or is he doomed? (enhancements)
+      return false
   }
 }
 
 const gameFinished = function () {
-  // Post announcement of win
-  $('#announcement').html(`${store.objGame.strTurn} won!`)
   // Highlight winning paths (enhancement)
   // Remove grid's event handler
   $('#grid').off('click')
