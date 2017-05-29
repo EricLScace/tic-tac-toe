@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tic Tac Toe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Do not add `link` tags unless you know what you are doing -->
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+    <!-- Do not add `script` tags unless you know what you are doing -->
+    <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
+    <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
+
+    <!-- Handlebars scripts for pre-compiled -->
+    <!-- <script src="./node_modules/handlebars/dist/handlebars.min.js"></script>
+    <script src="./node_modules/handlebars/dist/cjs/handlebars.runtime.js"></script>
+    <script src="./assets/scripts/templatesCompiled.js"></script> -->
+  </head>
+
+  <!-- SASS container-fluid creates a full wdith container that spans the viewport. -->
+  <body class="container-fluid">
+
+    <!-- Title row -->
+    <div class="row game-title col-sm-12">
+    </div>
+
+    <!-- Player identification & control -->
+    <div id="player" class="row">
+    </div>
+
+    <!-- Game grid -->
+    <div id="grid" class="row">
+    </div>
+
+    <!-- Announcements -->
+    <div class="row">
+      <div id="announcement" class="announcements col-xs-offset-1 col-xs-10">
+      </div>
+    </div>
+  </body>
+</html>
