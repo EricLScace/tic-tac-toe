@@ -22,7 +22,7 @@ const Game = function () {
 // ===== ===== =====
 // AddMove attempts to add the next move at the specified grid square.
 // Returns:
-//  'win' if the move finishes the game in a win.
+//  'X' or 'O' if the move finishes the game in a win.
 //  'draw' if the game cannot be won.
 //  'occupied' if player clicked on occupied square.
 //  false if game can continue

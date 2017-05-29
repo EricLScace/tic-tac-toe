@@ -20,6 +20,7 @@ const onGridClick = function (e) {
     case 'X':
       // Game contains mark of winner: add it to the grid
       $('#' + e.target.id).html(store.objGame.strTurn)
+      $('#announcement').html(`${store.objGame.strTurn} won.`)
       gameFinished()
       return store.objGame.strTurn
     case 'draw':
